@@ -10,20 +10,21 @@ class App_old extends Component {
             {name: 'Maxx', age: 16},
             {name: 'Maxxx', age: 20},
         ],
-        otherState: 'Some value'
+        otherState: 'Some value',
+        showPersons: false
     };
 
-    switchNameHandle = (newName) => {
-        // console.log("Been Clicked")
-        this.setState({
-            persons: [
-                {name: newName, age: 50},
-                {name: newName, age: 50},
-                {name: newName, age: 50}
-            ]
-        });
-        console.log(this.state)
-    };
+    // switchNameHandle = (newName) => {
+    //     // console.log("Been Clicked")
+    //     this.setState({
+    //         persons: [
+    //             {name: newName, age: 50},
+    //             {name: newName, age: 50},
+    //             {name: newName, age: 50}
+    //         ]
+    //     });
+    //     console.log(this.state)
+    // };
     nameChangeHandler = (event) => {
         this.setState({
             persons: [
@@ -33,9 +34,41 @@ class App_old extends Component {
             ]
         })
     };
+    togglePersonHandler = () => {
+        const doesShow = this.state.showPersons;
+        this.setState({showPersons: !doesShow});
+    };
 
+    deletePersonHandler = (personIndex) => {
+        const persons = this.state.persons;
+        persons.splice(personIndex, 1);
+        this.setState({persons: persons})
+    };
 
     render() {
+        let persons = null;
+        if (this.state.showPersons) {
+            persons = (
+                <div>
+                    {this.state.persons.map((person, index) => {
+                            return <Person
+                                click={() => this.deletePersonHandler(index)}
+                                name={person.name}
+                                age={person.age}/>
+                        }
+                    )}
+                    {/*<Person name={this.state.persons[0].name}*/}
+                    {/*        age={this.state.persons[0].age}/>*/}
+
+                    {/*<Person name={this.state.persons[1].name}*/}
+                    {/*        age={this.state.persons[1].age}*/}
+                    {/*        click={this.switchNameHandle.bind(this, "Hello")}*/}
+                    {/*        changed={this.nameChangeHandler}> Welcome</Person>*/}
+                    {/*<Person name={this.state.persons[2].name}*/}
+                    {/*        age={this.state.persons[2].age}/>*/}
+                </div>
+            )
+        }
         const style = {
             backgroundColor: 'white',
             font: 'inherit',
@@ -46,20 +79,14 @@ class App_old extends Component {
         return (
             <div className="App">
                 <h1>Practice Project </h1>
-                <button style={style} onClick={this.switchNameHandle.bind(this, "WTF")}>Switch Name</button>
-                <Person name={this.state.persons[0].name}
-                        age={this.state.persons[0].age}/>
-
-                <Person name={this.state.persons[1].name}
-                        age={this.state.persons[1].age}
-                        click={this.switchNameHandle.bind(this, "Hello")}
-                        changed={this.nameChangeHandler}> Welcome</Person>
-                <Person name={this.state.persons[2].name}
-                        age={this.state.persons[2].age}/>
-
+                {/*<button style={style} onClick={this.switchNameHandle.bind(this, "WTF")}>Switch Name</button>*/}
+                <button style={style} onClick={this.togglePersonHandler}>Show Detail</button>
+                {persons}
             </div>
         );
     }
+
+
 }
 
 export default App_old;
