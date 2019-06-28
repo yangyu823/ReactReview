@@ -56,6 +56,14 @@ class App_old extends Component {
     };
 
     render() {
+        const style = {
+            backgroundColor: 'green',
+            color: 'white',
+            font: 'inherit',
+            border: '1px solid blue',
+            padding: '8px',
+            cursor: 'pointer'
+        };
         let persons = null;
         if (this.state.showPersons) {
             persons = (
@@ -81,15 +89,9 @@ class App_old extends Component {
                     {/*<Person name={this.state.persons[2].name}*/}
                     {/*        age={this.state.persons[2].age}/>*/}
                 </div>
-            )
+            );
+            style.backgroundColor = 'red'
         }
-        const style = {
-            backgroundColor: 'white',
-            font: 'inherit',
-            border: '1px solid blue',
-            padding: '8px',
-            cursor: 'pointer'
-        };
         return (
             <div className="App">
                 <h1>Practice Project </h1>
