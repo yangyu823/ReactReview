@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
 import Person from "./Person/Person";
 import './App.css'
+import Radium, {StyleRoot} from 'radium';
 import './Person/Person.css'
 
-class App_old extends Component {
+class App extends Component {
     state = {
         persons: [
             {id: "sdfsdfsdf", name: 'Max', age: 28},
@@ -62,7 +63,10 @@ class App_old extends Component {
             font: 'inherit',
             border: '1px solid blue',
             padding: '8px',
-            cursor: 'pointer'
+            cursor: 'pointer',
+            ':hover': {
+                backgroundColor: 'blue'
+            }
         };
         let persons = null;
         if (this.state.showPersons) {
@@ -90,19 +94,35 @@ class App_old extends Component {
                     {/*        age={this.state.persons[2].age}/>*/}
                 </div>
             );
-            style.backgroundColor = 'red'
+            style.backgroundColor = 'red';
+            style[':hover'] = {
+                backgroundColor: 'lightgreen',
+                color: 'black'
+            }
         }
+
+        const classes = [];
+        if (this.state.persons.length <= 2) {
+            classes.push('red'); //class will be red
+        }
+        if (this.state.persons.length <= 1) {
+            classes.push('bold'); //class will be red and bolt
+        }
+
         return (
-            <div className="App">
-                <h1>Practice Project </h1>
-                {/*<button style={style} onClick={this.switchNameHandle.bind(this, "WTF")}>Switch Name</button>*/}
-                <button style={style} onClick={this.togglePersonHandler}>Show Detail</button>
-                {persons}
-            </div>
+            <StyleRoot>
+                <div className="App">
+                    <h1>Practice Project </h1>
+                    <p className={classes.join(' ')}>This is a react project</p>
+                    {/*<button style={style} onClick={this.switchNameHandle.bind(this, "WTF")}>Switch Name</button>*/}
+                    <button style={style} onClick={this.togglePersonHandler}>Show Detail</button>
+                    {persons}
+                </div>
+            </StyleRoot>
         );
     }
 
 
 }
 
-export default App_old;
+export default Radium(App);
